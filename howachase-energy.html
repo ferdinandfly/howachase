@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HOWACHASE ENERGY · 法国农光互补投资平台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080c08;
+    --dark: #0d120d;
+    --card: #111611;
+    --border: rgba(255,255,255,0.07);
+    --text: #e2e8e2;
+    --muted: #7a8a7a;
+    --accent: #c8e840;      /* volt green */
+    --accent2: #4a9060;     /* deep green */
+    --gold: #d4a847;        /* French gold */
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 64px;
+    transition: background 0.5s, backdrop-filter 0.5s;
+  }
+
+  nav.scrolled {
+    background: rgba(8,12,8,0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-decoration: none;
+  }
+
+  .logo-main {
+    font-family: 'Space Mono', monospace;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .logo-main span { color: var(--accent); }
+
+  .logo-sub {
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .lang-flag {
+    font-size: 18px;
+    opacity: 0.7;
+  }
+
+  .btn-nav {
+    background: var(--accent);
+    color: var(--black);
+    padding: 10px 22px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+  }
+
+  .btn-nav:hover { background: #d8f850; transform: translateY(-1px); }
+
+  /* ─── HERO ─── */
+  .hero {
+    height: 100vh;
+    min-height: 700px;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+
+  /* Animated landscape */
+  .hero-landscape {
+    position: absolute;
+    inset: 0;
+  }
+
+  .sky {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      #060d06 0%,
+      #0a1a0a 30%,
+      #0d2010 55%,
+      #152a10 70%,
+      #1a3015 100%
+    );
+  }
+
+  /* Stars */
+  .stars {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .stars::before, .stars::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: white;
+    box-shadow:
+      120px 80px rgba(255,255,255,0.6),
+      240px 40px rgba(255,255,255,0.4),
+      360px 120px rgba(255,255,255,0.5),
+      480px 60px rgba(255,255,255,0.3),
+      600px 100px rgba(255,255,255,0.6),
+      720px 30px rgba(255,255,255,0.4),
+      840px 90px rgba(255,255,255,0.5),
+      960px 50px rgba(255,255,255,0.3),
+      1080px 110px rgba(255,255,255,0.4),
+      1200px 70px rgba(255,255,255,0.6),
+      180px 150px rgba(255,255,255,0.3),
+      300px 170px rgba(255,255,255,0.4),
+      540px 130px rgba(255,255,255,0.5),
+      780px 160px rgba(255,255,255,0.3),
+      1020px 140px rgba(255,255,255,0.4);
+  }
+
+  /* Horizon glow */
+  .horizon-glow {
+    position: absolute;
+    bottom: 38%;
+    left: 0; right: 0;
+    height: 200px;
+    background: radial-gradient(ellipse 80% 100% at 50% 100%, rgba(200,232,64,0.12) 0%, transparent 70%);
+  }
+
+  /* Solar panel field SVG */
+  .field-svg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 45%;
+  }
+
+  /* Green hills */
+  .hills {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 40%;
+  }
+
+  .hills svg { width: 100%; height: 100%; }
+
+  /* Floating particles */
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: float linear infinite;
+    opacity: 0;
+  }
+
+  @keyframes float {
+    0% { opacity: 0; transform: translateY(0) scale(0); }
+    10% { opacity: 0.6; transform: translateY(-10px) scale(1); }
+    90% { opacity: 0.3; }
+    100% { opacity: 0; transform: translateY(-80px) scale(0.5); }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    padding: 0 64px 80px;
+    max-width: 860px;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: heroReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+  }
+
+  @keyframes heroReveal {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-flag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+    padding: 8px 16px;
+    border: 1px solid rgba(200,232,64,0.25);
+    background: rgba(200,232,64,0.05);
+  }
+
+  .hero-flag span {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 7.5vw, 112px);
+    font-weight: 300;
+    line-height: 0.93;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    margin-bottom: 36px;
+  }
+
+  .hero h1 .line-fr {
+    display: block;
+    font-style: italic;
+    color: var(--accent);
+    font-size: 0.65em;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .hero h1 .line-en {
+    display: block;
+    font-size: 0.28em;
+    font-style: normal;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.3);
+    margin-top: 16px;
+    font-weight: 400;
+  }
+
+  .hero-desc {
+    font-size: 17px;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.5);
+    max-width: 500px;
+    margin-bottom: 44px;
+  }
+
+  .hero-desc strong { color: rgba(255,255,255,0.8); font-weight: 400; }
+
+  .hero-btns {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--black);
+    padding: 16px 36px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { background: #d8f850; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(200,232,64,0.25); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    padding: 16px 36px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    border: 1px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  /* Hero right corner info */
+  .hero-coords {
+    position: absolute;
+    right: 64px;
+    bottom: 80px;
+    text-align: right;
+    z-index: 10;
+    opacity: 0;
+    animation: heroReveal 1.4s ease 0.8s forwards;
+  }
+
+  .coords-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--accent2);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+
+  .coords-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    line-height: 1.6;
+  }
+
+  /* Scroll indicator */
+  .hero-scroll {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    opacity: 0;
+    animation: heroReveal 1s ease 1.5s forwards;
+    transition: opacity 0.3s;
+  }
+
+  .scroll-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: scrollBounce 2s ease-in-out infinite;
+  }
+
+  .scroll-line-el {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+
+  @keyframes scrollBounce {
+    0%, 100% { opacity: 0.4; transform: translateY(0); }
+    50% { opacity: 1; transform: translateY(6px); }
+  }
+
+  /* ─── KEY METRICS ─── */
+  .metrics {
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+  }
+
+  .metrics-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .metric-box {
+    padding: 52px 32px;
+    border-right: 1px solid var(--border);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.7s ease;
+  }
+
+  .metric-box:last-child { border-right: none; }
+  .metric-box.visible { opacity: 1; transform: translateY(0); }
+  .metric-box:nth-child(2) { transition-delay: 0.1s; }
+  .metric-box:nth-child(3) { transition-delay: 0.2s; }
+  .metric-box:nth-child(4) { transition-delay: 0.3s; }
+  .metric-box:nth-child(5) { transition-delay: 0.4s; }
+
+  .metric-box-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .metric-box-unit {
+    font-size: 18px;
+    color: var(--accent2);
+  }
+
+  .metric-box-label {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ─── SECTION COMMONS ─── */
+  section {
+    padding: 120px 64px;
+  }
+
+  .s-eye {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 16px;
+  }
+
+  .s-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(38px, 5vw, 72px);
+    font-weight: 300;
+    line-height: 1.0;
+    color: var(--white);
+    margin-bottom: 28px;
+  }
+
+  .s-title em { font-style: italic; color: var(--accent); }
+
+  .s-body {
+    font-size: 16px;
+    line-height: 1.85;
+    color: rgba(255,255,255,0.45);
+  }
+
+  /* ─── WHY FRANCE ─── */
+  .why-france {
+    background: var(--black);
+    border-top: 1px solid var(--border);
+  }
+
+  .wf-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+
+  .wf-visual {
+    position: relative;
+    aspect-ratio: 1/1;
+    overflow: visible;
+  }
+
+  /* France map outline simplified */
+  .france-map-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;
+  }
+
+  .france-map-wrap svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 40px rgba(200,232,64,0.15));
+  }
+
+  .wf-cards {
+    position: absolute;
+    right: -30px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .wf-pill {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--accent);
+    padding: 10px 18px;
+    font-size: 12px;
+    color: var(--text);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .wf-pill-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .wf-points {
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .wf-point {
+    padding: 24px 28px;
+    border: 1px solid transparent;
+    transition: all 0.3s;
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .wf-point:hover {
+    border-color: rgba(200,232,64,0.2);
+    background: rgba(200,232,64,0.03);
+  }
+
+  .wf-point-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 300;
+    color: rgba(200,232,64,0.2);
+    line-height: 1;
+    margin-top: -4px;
+  }
+
+  .wf-point-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 6px;
+    letter-spacing: 0.02em;
+  }
+
+  .wf-point-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ─── AGRIVOLTAÏSME ─── */
+  .agri {
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .agri-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 240px;
+    font-weight: 300;
+    color: rgba(200,232,64,0.025);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: -0.05em;
+  }
+
+  .agri-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .agri-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: end;
+    margin-bottom: 80px;
+  }
+
+  .agri-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .agri-card {
+    background: var(--card);
+    padding: 48px 36px;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.7s ease;
+  }
+
+  .agri-card.visible { opacity: 1; transform: translateY(0); }
+  .agri-card:nth-child(2) { transition-delay: 0.15s; }
+  .agri-card:nth-child(3) { transition-delay: 0.3s; }
+
+  .agri-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--accent), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .agri-card:hover::after { transform: scaleX(1); }
+
+  .agri-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 28px;
+    color: var(--accent);
+  }
+
+  .agri-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .agri-card-sub {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 16px;
+  }
+
+  .agri-card-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  /* ─── STORAGE ─── */
+  .storage {
+    background: var(--black);
+    border-top: 1px solid var(--border);
+  }
+
+  .storage-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+
+  .storage-visual {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .battery-unit {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: border-color 0.3s;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.6s ease;
+  }
+
+  .battery-unit.visible { opacity: 1; transform: translateX(0); }
+  .battery-unit:nth-child(2) { transition-delay: 0.1s; }
+  .battery-unit:nth-child(3) { transition-delay: 0.2s; }
+  .battery-unit:nth-child(4) { transition-delay: 0.3s; }
+
+  .battery-unit:hover { border-color: rgba(200,232,64,0.25); }
+
+  .bat-bar-wrap {
+    flex: 1;
+    height: 6px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .bat-bar {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(to right, var(--accent2), var(--accent));
+    transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 0;
+  }
+
+  .battery-unit.visible .bat-bar { width: var(--fill); }
+
+  .bat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    white-space: nowrap;
+    min-width: 80px;
+  }
+
+  .bat-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    min-width: 60px;
+    text-align: right;
+  }
+
+  /* ─── INVESTMENT ─── */
+  .investment {
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .inv-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .inv-header {
+    max-width: 640px;
+    margin: 0 auto 80px;
+  }
+
+  .inv-table {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    text-align: left;
+  }
+
+  .inv-cell {
+    background: var(--card);
+    padding: 48px 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .inv-cell.visible { opacity: 1; transform: translateY(0); }
+  .inv-cell:nth-child(2) { transition-delay: 0.12s; }
+  .inv-cell:nth-child(3) { transition-delay: 0.24s; }
+  .inv-cell:nth-child(4) { transition-delay: 0.36s; }
+  .inv-cell:nth-child(5) { transition-delay: 0.48s; }
+  .inv-cell:nth-child(6) { transition-delay: 0.6s; }
+
+  .inv-cell.featured {
+    background: rgba(200,232,64,0.05);
+    border: 1px solid rgba(200,232,64,0.25);
+  }
+
+  .inv-cell-tag {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 16px;
+  }
+
+  .inv-cell-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+
+  .inv-cell-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .inv-cell-unit {
+    font-size: 16px;
+    color: var(--accent2);
+  }
+
+  .inv-cell-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-top: 16px;
+  }
+
+  /* ─── PROCESS ─── */
+  .process-section {
+    background: var(--black);
+    border-top: 1px solid var(--border);
+  }
+
+  .proc-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .proc-header {
+    max-width: 600px;
+    margin-bottom: 80px;
+  }
+
+  .proc-steps {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    position: relative;
+  }
+
+  .proc-line {
+    position: absolute;
+    top: 28px;
+    left: 5%;
+    right: 5%;
+    height: 1px;
+    background: linear-gradient(to right, var(--border), rgba(200,232,64,0.4), var(--border));
+  }
+
+  .proc-step {
+    padding: 0 16px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease;
+  }
+
+  .proc-step.visible { opacity: 1; transform: translateY(0); }
+  .proc-step:nth-child(2) { transition-delay: 0.1s; }
+  .proc-step:nth-child(3) { transition-delay: 0.2s; }
+  .proc-step:nth-child(4) { transition-delay: 0.3s; }
+  .proc-step:nth-child(5) { transition-delay: 0.4s; }
+
+  .proc-num {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,232,64,0.3);
+    background: var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    margin: 0 auto 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .proc-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 10px;
+    letter-spacing: 0.03em;
+  }
+
+  .proc-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ─── CTA ─── */
+  .cta-s {
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(200,232,64,0.06) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .cta-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cta-inner .s-title {
+    font-size: clamp(42px, 6vw, 88px);
+  }
+
+  .cta-inner p {
+    font-size: 17px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.75;
+    margin-bottom: 52px;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 64px;
+    text-align: left;
+  }
+
+  .contact-box {
+    background: var(--card);
+    padding: 32px;
+    border: 1px solid var(--border);
+    transition: border-color 0.3s;
+  }
+
+  .contact-box:hover { border-color: rgba(200,232,64,0.25); }
+
+  .contact-box-label {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 10px;
+  }
+
+  .contact-box-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--white);
+    line-height: 1.6;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--black);
+    border-top: 1px solid var(--border);
+    padding: 60px 64px;
+  }
+
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2.5fr 1fr 1fr 1fr;
+    gap: 60px;
+  }
+
+  .footer-brand p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-top: 16px;
+    max-width: 300px;
+  }
+
+  .footer-col h5 {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 20px;
+  }
+
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+  .footer-col ul a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.3s;
+  }
+
+  .footer-col ul a:hover { color: var(--accent); }
+
+  .footer-bottom {
+    max-width: 1280px;
+    margin: 40px auto 0;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-bottom p { font-size: 11px; color: rgba(255,255,255,0.15); letter-spacing: 0.05em; }
+
+  /* ─── FADE IN ─── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    nav { padding: 20px 28px; }
+    .nav-links { display: none; }
+    section { padding: 80px 28px; }
+    .hero-content { padding: 0 28px 70px; }
+    .hero-coords { right: 28px; bottom: 70px; }
+    .metrics-inner { grid-template-columns: repeat(3, 1fr); }
+    .wf-inner, .storage-inner { grid-template-columns: 1fr; gap: 60px; }
+    .agri-header { grid-template-columns: 1fr; gap: 40px; }
+    .agri-cards { grid-template-columns: 1fr; }
+    .inv-table { grid-template-columns: 1fr; }
+    .proc-steps { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+    .proc-line { display: none; }
+    .contact-grid { grid-template-columns: 1fr; }
+    footer { padding: 48px 28px; }
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="logo">
+    <div class="logo-main">HOWACHASE<span>_</span>ENERGY</div>
+    <div class="logo-sub">Agrivoltaïsme · Stockage · France</div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#why-france">投资价值</a></li>
+    <li><a href="#agri">农光互补</a></li>
+    <li><a href="#storage">储能系统</a></li>
+    <li><a href="#investment">收益模型</a></li>
+    <li><a href="#contact">联系我们</a></li>
+  </ul>
+  <div class="nav-right">
+    <span class="lang-flag">🇫🇷</span>
+    <button class="btn-nav" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">投资咨询</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-landscape">
+    <div class="sky"></div>
+    <div class="stars"></div>
+    <div class="horizon-glow"></div>
+
+    <!-- Landscape SVG -->
+    <svg class="field-svg" viewBox="0 0 1440 400" preserveAspectRatio="xMidYMax slice" fill="none">
+      <!-- Hills background -->
+      <path d="M0 300 Q200 180 400 250 Q600 320 800 200 Q1000 80 1200 180 Q1350 240 1440 200 L1440 400 L0 400Z" fill="#0a1a0a"/>
+      <path d="M0 340 Q180 280 360 310 Q540 340 720 270 Q900 200 1080 260 Q1260 320 1440 280 L1440 400 L0 400Z" fill="#0d200d"/>
+      <!-- Ground -->
+      <rect x="0" y="360" width="1440" height="40" fill="#111811"/>
+
+      <!-- Solar panel rows (perspective) -->
+      <g opacity="0.85">
+        <!-- Row far -->
+        <g fill="rgba(15,40,20,0.9)" stroke="rgba(200,232,64,0.35)" stroke-width="0.8">
+          <rect x="80" y="310" width="70" height="22" rx="2"/>
+          <rect x="165" y="310" width="70" height="22" rx="2"/>
+          <rect x="250" y="310" width="70" height="22" rx="2"/>
+          <rect x="335" y="310" width="70" height="22" rx="2"/>
+          <rect x="420" y="310" width="70" height="22" rx="2"/>
+          <rect x="505" y="310" width="70" height="22" rx="2"/>
+          <rect x="590" y="310" width="70" height="22" rx="2"/>
+          <rect x="675" y="310" width="70" height="22" rx="2"/>
+          <rect x="760" y="310" width="70" height="22" rx="2"/>
+          <rect x="845" y="310" width="70" height="22" rx="2"/>
+          <rect x="930" y="310" width="70" height="22" rx="2"/>
+          <rect x="1015" y="310" width="70" height="22" rx="2"/>
+          <rect x="1100" y="310" width="70" height="22" rx="2"/>
+          <rect x="1185" y="310" width="70" height="22" rx="2"/>
+          <rect x="1270" y="310" width="70" height="22" rx="2"/>
+        </g>
+        <!-- Row near -->
+        <g fill="rgba(12,35,16,0.95)" stroke="rgba(200,232,64,0.5)" stroke-width="1">
+          <rect x="40" y="340" width="90" height="28" rx="2"/>
+          <rect x="148" y="340" width="90" height="28" rx="2"/>
+          <rect x="256" y="340" width="90" height="28" rx="2"/>
+          <rect x="364" y="340" width="90" height="28" rx="2"/>
+          <rect x="472" y="340" width="90" height="28" rx="2"/>
+          <rect x="580" y="340" width="90" height="28" rx="2"/>
+          <rect x="688" y="340" width="90" height="28" rx="2"/>
+          <rect x="796" y="340" width="90" height="28" rx="2"/>
+          <rect x="904" y="340" width="90" height="28" rx="2"/>
+          <rect x="1012" y="340" width="90" height="28" rx="2"/>
+          <rect x="1120" y="340" width="90" height="28" rx="2"/>
+          <rect x="1228" y="340" width="90" height="28" rx="2"/>
+          <rect x="1336" y="340" width="90" height="28" rx="2"/>
+        </g>
+        <!-- Panel dividers -->
+        <g stroke="rgba(200,232,64,0.15)" stroke-width="0.5">
+          <!-- Far row dividers -->
+          <line x1="115" y1="310" x2="115" y2="332"/>
+          <line x1="200" y1="310" x2="200" y2="332"/>
+          <line x1="285" y1="310" x2="285" y2="332"/>
+          <line x1="370" y1="310" x2="370" y2="332"/>
+          <!-- Near row dividers -->
+          <line x1="85" y1="340" x2="85" y2="368"/>
+          <line x1="193" y1="340" x2="193" y2="368"/>
+          <line x1="301" y1="340" x2="301" y2="368"/>
+          <line x1="409" y1="340" x2="409" y2="368"/>
+        </g>
+      </g>
+
+      <!-- Support poles -->
+      <g stroke="rgba(200,232,64,0.2)" stroke-width="1.5">
+        <line x1="85" y1="368" x2="85" y2="390"/>
+        <line x1="130" y1="368" x2="130" y2="390"/>
+        <line x1="193" y1="368" x2="193" y2="390"/>
+        <line x1="238" y1="368" x2="238" y2="390"/>
+      </g>
+
+      <!-- Sun rising -->
+      <circle cx="720" cy="220" r="45" fill="rgba(212,168,71,0.18)"/>
+      <circle cx="720" cy="220" r="28" fill="rgba(212,168,71,0.35)"/>
+      <circle cx="720" cy="220" r="16" fill="rgba(212,168,71,0.7)"/>
+
+      <!-- Light rays -->
+      <g stroke="rgba(212,168,71,0.1)" stroke-width="1">
+        <line x1="720" y1="195" x2="720" y2="120"/>
+        <line x1="740" y1="200" x2="790" y2="140"/>
+        <line x1="700" y1="200" x2="650" y2="140"/>
+        <line x1="748" y1="215" x2="820" y2="195"/>
+        <line x1="692" y1="215" x2="620" y2="195"/>
+      </g>
+
+      <!-- Vineyard/crop rows under panels (agricultural use) -->
+      <g stroke="rgba(74,144,96,0.3)" stroke-width="1" stroke-dasharray="4 8">
+        <line x1="0" y1="375" x2="1440" y2="375"/>
+        <line x1="0" y1="382" x2="1440" y2="382"/>
+        <line x1="0" y1="389" x2="1440" y2="389"/>
+        <line x1="0" y1="396" x2="1440" y2="396"/>
+      </g>
+
+      <!-- Gradient overlay bottom -->
+      <defs>
+        <linearGradient id="heroFade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="rgba(8,12,8,0)"/>
+          <stop offset="70%" stop-color="rgba(8,12,8,0)"/>
+          <stop offset="100%" stop-color="rgba(8,12,8,0.8)"/>
+        </linearGradient>
+      </defs>
+      <rect x="0" y="0" width="1440" height="400" fill="url(#heroFade)"/>
+    </svg>
+
+    <!-- Left gradient for text readability -->
+    <div style="position:absolute;inset:0;background:linear-gradient(to right, rgba(8,12,8,0.85) 0%, rgba(8,12,8,0.4) 50%, transparent 100%);"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-flag">
+      <span>🇫🇷</span>
+      <span>France · Gironde · Bordeaux Region</span>
+    </div>
+    <h1>
+      <span class="line-fr">Là où la terre produit double</span>
+      土地与阳光的<br>双重价值
+      <span class="line-en">HOWACHASE ENERGY · AGRIVOLTAÏSME</span>
+    </h1>
+    <p class="hero-desc">
+      在法国最优质的葡萄酒产区旁，我们将<strong>农业用地</strong>与<strong>光伏发电</strong>完美融合——绕过法国严苛的土地审批壁垒，为中国投资人打开一扇进入欧洲清洁能源市场的窗口。
+    </p>
+    <div class="hero-btns">
+      <a href="#investment" class="btn-primary">查看投资回报</a>
+      <a href="#agri" class="btn-outline">了解农光互补</a>
+    </div>
+  </div>
+
+  <div class="hero-coords">
+    <div class="coords-label">项目坐标</div>
+    <div class="coords-value">
+      44°43'N 0°30'W<br>
+      Latresne, Gironde<br>
+      Nouvelle-Aquitaine
+    </div>
+  </div>
+
+  <div class="hero-scroll" id="heroScroll">
+    <div class="scroll-dot"></div>
+    <div class="scroll-line-el"></div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<div class="metrics" id="metrics">
+  <div class="metrics-inner">
+    <div class="metric-box">
+      <div class="metric-box-num">7<span class="metric-box-unit">%+</span></div>
+      <div class="metric-box-label">年化投资<br>回报率</div>
+    </div>
+    <div class="metric-box">
+      <div class="metric-box-num">20<span class="metric-box-unit">年</span></div>
+      <div class="metric-box-label">上网电价<br>政府保障期</div>
+    </div>
+    <div class="metric-box">
+      <div class="metric-box-num">1<span class="metric-box-unit">GW+</span></div>
+      <div class="metric-box-label">法国年新增<br>农光装机</div>
+    </div>
+    <div class="metric-box">
+      <div class="metric-box-num">2x</div>
+      <div class="metric-box-label">双重收益<br>发电+农业</div>
+    </div>
+    <div class="metric-box">
+      <div class="metric-box-num">€<span class="metric-box-unit">稳</span></div>
+      <div class="metric-box-label">欧元计价<br>抗汇率风险</div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY FRANCE -->
+<section class="why-france" id="why-france">
+  <div class="wf-inner">
+    <div class="wf-visual fade-up">
+      <div class="france-map-wrap">
+        <svg viewBox="0 0 400 420" fill="none">
+          <!-- France simplified outline -->
+          <path d="M140 20 L200 15 L260 30 L310 60 L340 100 L360 150 L350 200 L370 240 L340 280 L310 320 L270 360 L220 390 L180 380 L140 350 L100 300 L70 260 L50 210 L60 160 L50 120 L80 80 L110 50 Z"
+            fill="rgba(200,232,64,0.04)"
+            stroke="rgba(200,232,64,0.35)"
+            stroke-width="1.5"/>
+
+          <!-- Regions light fill -->
+          <path d="M140 20 L200 15 L220 60 L180 80 L140 70 L110 50 Z" fill="rgba(200,232,64,0.06)"/>
+          <path d="M180 360 L220 390 L200 400 L165 385 Z" fill="rgba(74,144,96,0.15)"/>
+
+          <!-- Project location dot - Bordeaux/Latresne area -->
+          <circle cx="145" cy="270" r="12" fill="rgba(200,232,64,0.15)" stroke="rgba(200,232,64,0.5)" stroke-width="1.5"/>
+          <circle cx="145" cy="270" r="5" fill="var(--accent)"/>
+
+          <!-- Pulse ring -->
+          <circle cx="145" cy="270" r="18" stroke="rgba(200,232,64,0.3)" stroke-width="1" fill="none" opacity="0.6">
+            <animate attributeName="r" values="12;28;12" dur="3s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.6;0;0.6" dur="3s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- Label -->
+          <text x="162" y="262" fill="rgba(200,232,64,0.8)" font-family="monospace" font-size="11" letter-spacing="1">Latresne</text>
+          <text x="162" y="277" fill="rgba(200,232,64,0.4)" font-family="monospace" font-size="9">Gironde · 33360</text>
+
+          <!-- Paris dot -->
+          <circle cx="210" cy="110" r="3" fill="rgba(255,255,255,0.3)"/>
+          <text x="218" y="114" fill="rgba(255,255,255,0.25)" font-family="monospace" font-size="9">Paris</text>
+
+          <!-- Lyon dot -->
+          <circle cx="265" cy="220" r="3" fill="rgba(255,255,255,0.2)"/>
+          <text x="272" y="224" fill="rgba(255,255,255,0.2)" font-family="monospace" font-size="9">Lyon</text>
+
+          <!-- EU stars top right -->
+          <g fill="rgba(212,168,71,0.5)" transform="translate(310, 30)">
+            <text font-size="22">🇪🇺</text>
+          </g>
+
+          <!-- Solar irradiation zones -->
+          <path d="M80 220 Q100 280 145 270 Q200 290 250 260 Q290 240 310 280 Q280 340 240 370 Q200 395 160 375 Q120 340 90 295 Z"
+            fill="rgba(212,168,71,0.06)" stroke="rgba(212,168,71,0.1)" stroke-width="1" stroke-dasharray="4 4"/>
+          <text x="155" y="340" fill="rgba(212,168,71,0.4)" font-family="monospace" font-size="8" letter-spacing="1">日照优质区</text>
+        </svg>
+      </div>
+
+      <div class="wf-cards">
+        <div class="wf-pill"><div class="wf-pill-dot"></div>波尔多产区旁</div>
+        <div class="wf-pill"><div class="wf-pill-dot"></div>距波尔多市 12km</div>
+        <div class="wf-pill"><div class="wf-pill-dot"></div>Nouvelle-Aquitaine</div>
+      </div>
+    </div>
+
+    <div class="fade-up">
+      <div class="s-eye">为什么选择法国</div>
+      <h2 class="s-title">欧洲最具<br><em>潜力</em>的<br>光伏市场</h2>
+
+      <div class="wf-points">
+        <div class="wf-point">
+          <div class="wf-point-num">01</div>
+          <div>
+            <div class="wf-point-title">政府20年保价收购</div>
+            <div class="wf-point-desc">法国 EDF 强制收购协议（Obligation d'achat），上网电价政府锁定20年，收益极度可预测。</div>
+          </div>
+        </div>
+        <div class="wf-point">
+          <div class="wf-point-num">02</div>
+          <div>
+            <div class="wf-point-title">农光互补大幅提速审批</div>
+            <div class="wf-point-desc">法国2023年通过《加速可再生能源法》，农光互补项目享有简化审批通道，相比普通地面电站审批时间缩短40%以上。</div>
+          </div>
+        </div>
+        <div class="wf-point">
+          <div class="wf-point-num">03</div>
+          <div>
+            <div class="wf-point-title">欧元资产·人民币对冲</div>
+            <div class="wf-point-desc">欧元计价收益为中国投资者提供天然的货币多元化配置，与国内资产相关性极低。</div>
+          </div>
+        </div>
+        <div class="wf-point">
+          <div class="wf-point-num">04</div>
+          <div>
+            <div class="wf-point-title">Gironde 日照资源优质</div>
+            <div class="wf-point-desc">波尔多地区年均日照超2000小时，位于法国日照最佳区域之一，光伏发电效率高。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AGRIVOLTAÏSME -->
+<section class="agri" id="agri">
+  <div class="agri-bg-text">AGRI</div>
+  <div class="agri-inner">
+    <div class="agri-header">
+      <div class="fade-up">
+        <div class="s-eye">核心优势</div>
+        <h2 class="s-title">农光互补<br><em>Agrivoltaïsme</em></h2>
+      </div>
+      <div class="fade-up">
+        <p class="s-body">农光互补不仅仅是技术方案——它是在法国严格土地保护法规下，打通光伏项目落地的战略钥匙。光伏板下方继续进行农业生产，满足法律要求，同时享受能源收益。</p>
+      </div>
+    </div>
+
+    <div class="agri-cards">
+      <div class="agri-card">
+        <svg class="agri-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="6" y="16" width="36" height="22" rx="3"/>
+          <line x1="6" y1="27" x2="42" y2="27"/>
+          <line x1="18" y1="16" x2="18" y2="38"/>
+          <line x1="30" y1="16" x2="30" y2="38"/>
+          <path d="M6 10 L24 4 L42 10"/>
+          <circle cx="24" cy="6" r="2" fill="currentColor"/>
+        </svg>
+        <div class="agri-card-sub">土地策略</div>
+        <div class="agri-card-title">绕过土地<br>审批壁垒</div>
+        <div class="agri-card-desc">法国农业用地（Zone Agricole）原则上禁止建设光伏。农光互补模式以"农业主导、光伏附属"定性，合法将农业土地转化为能源资产，无需土地性质变更。</div>
+      </div>
+      <div class="agri-card">
+        <svg class="agri-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="24" cy="18" r="10"/>
+          <path d="M14 18 Q14 34 24 40 Q34 34 34 18"/>
+          <path d="M24 8 L24 4"/>
+          <path d="M32 11 L35 8"/>
+          <path d="M35 20 L39 20"/>
+          <path d="M16 11 L13 8"/>
+          <path d="M13 20 L9 20"/>
+          <line x1="24" y1="40" x2="24" y2="44"/>
+          <line x1="18" y1="42" x2="30" y2="42"/>
+        </svg>
+        <div class="agri-card-sub">双重收益</div>
+        <div class="agri-card-title">一地两用<br>收益叠加</div>
+        <div class="agri-card-desc">光伏板下方种植葡萄、薰衣草或牧草，农业收入与上网电费双轨并行。光伏板还可为农作物遮阳减少水分蒸发，部分作物产量反而提升。</div>
+      </div>
+      <div class="agri-card">
+        <svg class="agri-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M8 36 L8 20 L24 10 L40 20 L40 36 Z"/>
+          <rect x="16" y="26" width="16" height="10"/>
+          <path d="M20 26 L20 22 Q24 18 28 22 L28 26"/>
+          <circle cx="24" cy="14" r="3"/>
+        </svg>
+        <div class="agri-card-sub">政策合规</div>
+        <div class="agri-card-title">2023年新法<br>加速落地</div>
+        <div class="agri-card-desc">《Accélération des Énergies Renouvelables》法案明确支持农光互补发展，简化行政程序，为项目开发提供法律确定性，显著降低开发风险。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORAGE -->
+<section class="storage" id="storage">
+  <div class="storage-inner">
+    <div>
+      <div class="s-eye fade-up">储能系统</div>
+      <h2 class="s-title fade-up">让发电<br><em>更值钱</em></h2>
+      <p class="s-body fade-up" style="margin-bottom:36px">
+        配套储能系统将白天发出的多余电力存储，在电网用电高峰期（电价最高时）放电，进一步提升每度电的售价收益，同时为电网提供调频服务获取额外补贴。
+      </p>
+      <p class="s-body fade-up">
+        法国电力现货市场（EPEX SPOT）峰谷价差显著，储能套利空间可达 <strong style="color:var(--accent)">2-4倍</strong> 基础上网电价。
+      </p>
+    </div>
+
+    <div class="storage-visual">
+      <div class="battery-unit" style="--fill: 95%">
+        <div class="bat-label">峰时发电</div>
+        <div class="bat-bar-wrap"><div class="bat-bar"></div></div>
+        <div class="bat-value">95%</div>
+      </div>
+      <div class="battery-unit" style="--fill: 78%">
+        <div class="bat-label">储能容量</div>
+        <div class="bat-bar-wrap"><div class="bat-bar"></div></div>
+        <div class="bat-value">78%</div>
+      </div>
+      <div class="battery-unit" style="--fill: 62%">
+        <div class="bat-label">峰时放电</div>
+        <div class="bat-bar-wrap"><div class="bat-bar"></div></div>
+        <div class="bat-value">62%</div>
+      </div>
+      <div class="battery-unit" style="--fill: 88%">
+        <div class="bat-label">综合效率</div>
+        <div class="bat-bar-wrap"><div class="bat-bar"></div></div>
+        <div class="bat-value">88%</div>
+      </div>
+
+      <!-- Storage specs -->
+      <div style="background:var(--card);border:1px solid var(--border);padding:28px 24px;margin-top:2px;display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div>
+          <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.2em;color:var(--muted);margin-bottom:6px">电池类型</div>
+          <div style="font-size:14px;color:var(--white)">磷酸铁锂 LFP</div>
+        </div>
+        <div>
+          <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.2em;color:var(--muted);margin-bottom:6px">循环寿命</div>
+          <div style="font-size:14px;color:var(--white)">6000+ 次</div>
+        </div>
+        <div>
+          <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.2em;color:var(--muted);margin-bottom:6px">质保年限</div>
+          <div style="font-size:14px;color:var(--accent)">10 年</div>
+        </div>
+        <div>
+          <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:0.2em;color:var(--muted);margin-bottom:6px">响应时间</div>
+          <div style="font-size:14px;color:var(--white)">&lt; 100ms</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INVESTMENT MODEL -->
+<section class="investment" id="investment">
+  <div class="inv-inner">
+    <div class="inv-header fade-up">
+      <div class="s-eye">投资回报模型</div>
+      <h2 class="s-title">透明、稳定<br>的<em>欧元收益</em></h2>
+      <p class="s-body" style="margin:0 auto;max-width:480px">基于法国政府上网电价保障机制，以下数据来自同类项目的实际运营数据，供投资参考。</p>
+    </div>
+
+    <div class="inv-table">
+      <div class="inv-cell featured">
+        <div class="inv-cell-tag">核心收益</div>
+        <div class="inv-cell-title">年化回报率</div>
+        <div class="inv-cell-num">7-9<span class="inv-cell-unit">%</span></div>
+        <div class="inv-cell-desc">含上网电费、农业租金收入及储能调频补贴，欧元计价，政府合同背书</div>
+      </div>
+      <div class="inv-cell">
+        <div class="inv-cell-tag">回收周期</div>
+        <div class="inv-cell-title">投资回本年限</div>
+        <div class="inv-cell-num">8-12<span class="inv-cell-unit">年</span></div>
+        <div class="inv-cell-desc">视项目规模与配置，之后进入纯收益期，设备寿命25-30年</div>
+      </div>
+      <div class="inv-cell">
+        <div class="inv-cell-tag">政府保障</div>
+        <div class="inv-cell-title">电价锁定期</div>
+        <div class="inv-cell-num">20<span class="inv-cell-unit">年</span></div>
+        <div class="inv-cell-desc">EDF 强制收购协议，合同期内电价不受市场波动影响</div>
+      </div>
+      <div class="inv-cell">
+        <div class="inv-cell-tag">起投规模</div>
+        <div class="inv-cell-title">最低参与门槛</div>
+        <div class="inv-cell-num">50<span class="inv-cell-unit">万€</span></div>
+        <div class="inv-cell-desc">可作为股权投资或债权融资参与，具体结构可根据需求定制</div>
+      </div>
+      <div class="inv-cell">
+        <div class="inv-cell-tag">税务优化</div>
+        <div class="inv-cell-title">法中税收协定</div>
+        <div class="inv-cell-num" style="font-size:36px">双重<span class="inv-cell-unit" style="font-size:14px">保护</span></div>
+        <div class="inv-cell-desc">法中两国已签署避免双重征税协定，合理规划可有效降低税负</div>
+      </div>
+      <div class="inv-cell featured">
+        <div class="inv-cell-tag">额外收益</div>
+        <div class="inv-cell-title">储能套利空间</div>
+        <div class="inv-cell-num">+2-4<span class="inv-cell-unit">×</span></div>
+        <div class="inv-cell-desc">峰谷电价差套利叠加调频服务补贴，在基础回报之上额外增收</div>
+      </div>
+    </div>
+
+    <p style="margin-top:32px;font-size:11px;color:rgba(255,255,255,0.2);text-align:center;letter-spacing:0.08em">
+      * 以上数据为参考区间，实际回报取决于项目具体条件。投资前请咨询专业顾问。
+    </p>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section" id="process">
+  <div class="proc-inner">
+    <div class="proc-header fade-up">
+      <div class="s-eye">合作流程</div>
+      <h2 class="s-title">从意向到<br><em>收益入账</em></h2>
+    </div>
+    <div class="proc-steps">
+      <div class="proc-line"></div>
+      <div class="proc-step">
+        <div class="proc-num">01</div>
+        <div class="proc-title">初步咨询</div>
+        <div class="proc-desc">了解投资规模与预期，介绍项目详情与结构，签署保密协议</div>
+      </div>
+      <div class="proc-step">
+        <div class="proc-num">02</div>
+        <div class="proc-title">尽调文件</div>
+        <div class="proc-desc">提供完整项目材料包：土地合同、电网接入许可、收益预测模型</div>
+      </div>
+      <div class="proc-step">
+        <div class="proc-num">03</div>
+        <div class="proc-title">法律架构</div>
+        <div class="proc-desc">中法律师协同设计投资结构，优化税务路径，确保合规</div>
+      </div>
+      <div class="proc-step">
+        <div class="proc-num">04</div>
+        <div class="proc-title">资金到位</div>
+        <div class="proc-desc">完成交割，资金进入项目专用账户，开始工程建设</div>
+      </div>
+      <div class="proc-step">
+        <div class="proc-num">05</div>
+        <div class="proc-title">并网收益</div>
+        <div class="proc-desc">项目并网后按合同周期分配收益，提供实时监控数据访问权限</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-s" id="contact">
+  <div class="cta-glow"></div>
+  <div class="cta-inner fade-up">
+    <div class="s-eye">开始对话</div>
+    <h2 class="s-title">
+      在法国的土地上<br>种下<em>欧元树</em>
+    </h2>
+    <p>我们的团队在波尔多与上海均设有联络处，欢迎中国投资人赴法实地考察项目，我们负责全程安排。</p>
+    <div class="hero-btns" style="justify-content:center;margin-bottom:0">
+      <a href="mailto:contact@howachase-energy.fr" class="btn-primary">发送投资意向</a>
+      <a href="tel:+33600000000" class="btn-outline">预约电话沟通</a>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-box">
+        <div class="contact-box-label">法国项目地址</div>
+        <div class="contact-box-value">
+          67 route du bord de l'eau<br>
+          33360 LATRESNE<br>
+          Gironde, France
+        </div>
+      </div>
+      <div class="contact-box">
+        <div class="contact-box-label">邮件联系</div>
+        <div class="contact-box-value">
+          contact@howachase-energy.fr<br>
+          <br>
+          <span style="color:var(--muted);font-size:11px">中文咨询均可</span>
+        </div>
+      </div>
+      <div class="contact-box">
+        <div class="contact-box-label">微信 / WeChat</div>
+        <div class="contact-box-value">
+          HOWACHASE_ENERGY<br>
+          <br>
+          <span style="color:var(--muted);font-size:11px">添加请备注：法国光伏投资</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#" class="logo" style="margin-bottom:16px;display:inline-flex">
+        <div class="logo-main">HOWACHASE<span style="color:var(--accent)">_</span>ENERGY</div>
+      </a>
+      <p>专注法国农光互补与储能投资开发，为中国投资人提供合规、透明、长期稳定的欧元资产配置机会。</p>
+      <div style="margin-top:20px;display:flex;gap:8px">
+        <span style="font-size:20px">🇫🇷</span>
+        <span style="font-size:20px">🇨🇳</span>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>产品</h5>
+      <ul>
+        <li><a href="#">农光互补系统</a></li>
+        <li><a href="#">储能解决方案</a></li>
+        <li><a href="#">EPC 总承包</a></li>
+        <li><a href="#">运维服务</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>投资者</h5>
+      <ul>
+        <li><a href="#">收益模型</a></li>
+        <li><a href="#">法律架构</a></li>
+        <li><a href="#">税务规划</a></li>
+        <li><a href="#">项目文件</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>公司</h5>
+      <ul>
+        <li><a href="#">关于我们</a></li>
+        <li><a href="#">新闻动态</a></li>
+        <li><a href="#">合规信息</a></li>
+        <li><a href="#">联系我们</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 HOWACHASE ENERGY SAS · 67 route du bord de l'eau, 33360 LATRESNE, France</p>
+    <p>Mentions légales · Politique de confidentialité</p>
+  </div>
+</footer>
+
+<script>
+// Nav scroll effect
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+  const scrollEl = document.getElementById('heroScroll');
+  if (scrollEl) scrollEl.style.opacity = window.scrollY > 100 ? '0' : '1';
+});
+
+// Intersection Observer
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll(
+  '.metric-box, .agri-card, .inv-cell, .proc-step, .battery-unit, .fade-up'
+).forEach(el => io.observe(el));
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+</script>
+</body>
+</html>
